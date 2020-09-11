@@ -14,5 +14,5 @@ class TodoVO {
     var todoText: String?
     var alarmCount: Int?
     var deadLineString: String?
-    var isDone: Bool?
+
 }
