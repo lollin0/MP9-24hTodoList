@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 var doneList:[TodoVO] = []
 class DoneTableViewController: UITableViewController {
     
@@ -15,7 +16,6 @@ class DoneTableViewController: UITableViewController {
         tableView.reloadData()
     }
     override func viewDidLoad() {
-        
     }
     
     // MARK: - Table view data source
@@ -55,15 +55,17 @@ class DoneTableViewController: UITableViewController {
             tableView.reloadData()
         }
         let okAction = UIAlertAction(title: "삭제", style: .destructive) { (action) in
-            list.append(doneList[indexPath.row])
             doneList.remove(at: indexPath.row)
             tableView.reloadData()
         }
         
         alert.addAction(recover)
         alert.addAction(okAction)
+        self.present(alert, animated: true)
         
     }
+    
+   
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
