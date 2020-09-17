@@ -9,8 +9,8 @@
 import UIKit
 import UserNotifications
 var list: [TodoVO] = []
-
-class MainViewController: UIViewController{
+var sections = ["오늘", "내일"]
+class MainViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var daySeg: UISegmentedControl!
     @IBOutlet weak var alarmSeg: UISegmentedControl!
@@ -18,63 +18,46 @@ class MainViewController: UIViewController{
     @IBOutlet weak var textLabel: UITextField!
     @IBOutlet weak var inputTime: UITextField!
     
+    @IBAction func didEndOnExit(sender: AnyObject) {
+
+    }
     let datePicker = UIDatePicker()
-    @IBAction func doneBtn(_ sender: Any) { // 완료 버튼 누르면 새로운 dataset 생성 및 list에 추가
+    @IBAction func checkBtn(_ sender: Any) { // 완료 버튼 누르면 새로운 dataset 생성 및 list에 추가
         
         let tvo = TodoVO() //새로운 tVO 생성, 임시용
-        tvo.todoText = textLabel.text
+        tvo.todoText = textLabel.text!
         
         tvo.alarmCount = alarmSeg.selectedSegmentIndex // 세그먼트 값을 alarmCount에 저장
-        tvo.deadLineString = inputTime.text
+        tvo.deadLineString = inputTime.text!
+        if daySeg.selectedSegmentIndex == 0{ // 날짜 선택에서 '오늘'을 선택했을 때
+            tvo.deadLine = datePicker.date + (3600*9) // 우리나라는 표준시가 +9이므로 3600초*9 = 32400초를 더해 준다!
+        }else{ //내일을 선택했을 때
+            tvo.deadLine = datePicker.date + 86400 + (3600*9) // 32400초 더해 준 것에다가 다음날(86400)초를 더해 주기
+        }
         list.append(tvo)
+        list.sort(by: { $0.deadLine < $1.deadLine }) //배열 정렬
         tableView.reloadData() //테이블 뷰 갱신
         textLabel.text = "" // 추가했으니 textLabel 비우기
         daySeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
         alarmSeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
+        print(tvo.deadLine)
         
-        //notification
-//        if #available(iOS 10, *){
-//            //UserNotification 프레임워크를 사용한 로컬 알림
-//            //알림 동의 여부 확인
-//            UNUserNotificationCenter.current().getNotificationSettings { settings in
-//                if settings.authorizationStatus == UNAuthorizationStatus.authorized{
-//                    // 알림 설정
-//                    DispatchQueue.main.async {
-//                        //알림 콘텐츠 정의
-//                        let nContent = UNMutableNotificationContent()
-//                        nContent.body = (self.textLabel.text)!
-//                        nContent.title = "미리 알림"
-//                        nContent.sound = UNNotificationSound.default
-//
-//
-//                        let time = self.datePicker.date.timeIntervalSinceNow // 발송 시각을 '지금으로부터 *초 형식'으로 변환
-//                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: time, repeats: false) // 발송 조건 정의
-//                        let request = UNNotificationRequest(identifier: "alarm", content: nContent, trigger: trigger) // 발송 요청 객체 정의
-//                        UNUserNotificationCenter.current().add(request) // Notification 센터에 추가
-//                    }
-//                } else{
-//                    let alert = UIAlertController(title: "알림 등록", message: "알림이 허용되어 있지 않습니다", preferredStyle: .alert)
-//                    let ok = UIAlertAction(title: "확인", style: .default)
-//                    alert.addAction(ok)
-//
-//                    self.present(alert, animated: true)
-//                    return
-//                }
-//            }
-//
-//        } else{
-//            //LocalNotification 객체를 사용한 로컬 알림
-//        }
         
     }
-
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+        super.viewWillAppear(animated)
+    }
+    func timeSet(setD: Int, setH: Int, setM: Int){
+        
+    }
     func createDatePicker(){
         
         inputTime.textAlignment = .center
@@ -82,6 +65,7 @@ class MainViewController: UIViewController{
         // toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        
         
         //bar button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
@@ -105,22 +89,34 @@ class MainViewController: UIViewController{
         
         inputTime.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
-        
-        
     }
+    
 }
 extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     
-    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count // 섹션 개수 2개
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //tableView.rowHeight = 40
-        return list.count // list의 개수만큼 테이블 뷰 셀 개수 지정
-        
+        if section == 0{
+            return newTodayArray(array: list).count //'오늘'리스트의 개수를 셀 개수로 반환
+        }else{
+            return newTomorrowArray(array: list).count //'내일'리스트의 개수를 셀 개수로 반환
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell")! // return을 위한 셀 변수 셍성
-        let row = list[indexPath.row] // 행에 맞는 데이터 가져오기
+        let row: TodoVO
+        if indexPath.section == 0{
+            row = newTodayArray(array: list)[indexPath.row] // '오늘' 배열 데이터 가져오기
+        } else{
+            row = newTomorrowArray(array: list)[indexPath.row]
+        }
+        
         
         // 레이블을 변수로 받음
         let text = cell.viewWithTag(101) as? UILabel
@@ -151,5 +147,36 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
             list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }
+    }
+    
+    func newTodayArray(array: [TodoVO]) -> [TodoVO]{ // 오늘까지인 투두리스트를 새로운 배열로 만들어 반환하는 함수
+        var newArray:[TodoVO] = [] // 반환할 새로운 배열
+        var calendar = Calendar.current // 캘린더 선언(오늘)
+        let today = Date() + (3600*9) // 오늘 날짜 변수 선언 (오늘+9시간 = 한국시간)
+        let midnight = calendar.startOfDay(for: today) + (3600*9) // 오늘 날짜의 시작 (00시) + 9시간
+        
+        for one in array{
+            if one.deadLine < midnight { // 마감 시간이 내일 00시 이전일 때(오늘 끝마칠 일일 때)
+                newArray.append(one)
+            }
+        }
+        print("todayArray",newArray)
+        return newArray
+    }
+    
+    func newTomorrowArray(array: [TodoVO]) -> [TodoVO]{ // 내일까지인 투두리스트를 새로운 배열로 만들어 반환하는 함수
+        var newArray:[TodoVO] = []
+        var calendar = Calendar.current
+        let today = Date() + (3600*9)
+        let midnight = calendar.startOfDay(for: today) + (3600*9)
+        print(today)
+        print("미드나잇", midnight)
+        for one in array{ // 마감 시간이 내일 00시 이후일 때 (내일 끝마칠 일일 때)
+            if one.deadLine >= midnight{
+                newArray.append(one)
+            }
+        }
+        print("tomorrowArray",newArray)
+        return newArray
     }
 }

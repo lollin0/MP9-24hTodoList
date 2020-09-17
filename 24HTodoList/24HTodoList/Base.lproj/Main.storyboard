@@ -20,12 +20,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="LiV-Bf-4mG">
-                                    <rect key="frame" x="0.0" y="103" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="103" width="414" height="33"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cri-Jq-Vxk">
-                                            <rect key="frame" x="158" y="8" width="99" height="30"/>
+                                            <rect key="frame" x="109" y="5" width="197" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <state key="normal" title="완료한 목록 보기"/>
                                             <connections>
                                                 <segue destination="dzB-W6-LUU" kind="show" id="uOg-Xc-RQ2"/>
@@ -100,6 +101,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="didEndOnExitWithSender:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="SUQ-bC-uus"/>
+                                    <action selector="touchTextField:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FXA-I1-AJE"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aJ-gg-a2n">
                                 <rect key="frame" x="364" y="60.5" width="30" height="30"/>
@@ -109,7 +114,7 @@
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="doneBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="au0-9T-2CH"/>
+                                    <action selector="checkBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PVC-Tc-d39"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cV2-lc-IVt">

@@ -9,10 +9,11 @@
 import Foundation
 
 class TodoVO {
-    var deadLineH: Int?
-    var deadLineM: Int?
-    var todoText: String?
-    var alarmCount: Int?
-    var deadLineString: String?
+    var deadLineH: Int = 0
+    var deadLineM: Int = 0
+    var todoText: String = ""
+    var alarmCount: Int = 0
+    var deadLineString: String = ""
+    var deadLine: Date = Date()
 
 }
