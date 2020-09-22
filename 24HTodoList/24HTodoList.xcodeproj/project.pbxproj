@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C5DE7152519BB89005775D0 /* 제목_없는_아트워크.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C5DE7142519BB88005775D0 /* 제목_없는_아트워크.png */; };
 		5C5F9B8B250A47D900E33A9B /* TodoVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F9B8A250A47D900E33A9B /* TodoVO.swift */; };
 		5C60D531250B39FC00B9D4F4 /* DoneTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C60D530250B39FC00B9D4F4 /* DoneTableViewController.swift */; };
 		5C8B878B250619DC00C101E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B878A250619DC00C101E8 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C5DE7142519BB88005775D0 /* 제목_없는_아트워크.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "제목_없는_아트워크.png"; sourceTree = "<group>"; };
 		5C5F9B8A250A47D900E33A9B /* TodoVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoVO.swift; sourceTree = "<group>"; };
 		5C60D530250B39FC00B9D4F4 /* DoneTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneTableViewController.swift; sourceTree = "<group>"; };
 		5C8B8787250619DC00C101E8 /* 24HTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 24HTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 				5C5F9B8A250A47D900E33A9B /* TodoVO.swift */,
 				5C8B878A250619DC00C101E8 /* AppDelegate.swift */,
 				5C8B878C250619DC00C101E8 /* SceneDelegate.swift */,
+				5C5DE7142519BB88005775D0 /* 제목_없는_아트워크.png */,
 				5C8B8790250619DC00C101E8 /* Main.storyboard */,
 				5C8B87A9250624AD00C101E8 /* MainViewController.swift */,
 				5C60D530250B39FC00B9D4F4 /* DoneTableViewController.swift */,
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C8B879A250619DF00C101E8 /* LaunchScreen.storyboard in Resources */,
+				5C5DE7152519BB89005775D0 /* 제목_없는_아트워크.png in Resources */,
 				5C8B8797250619DF00C101E8 /* Assets.xcassets in Resources */,
 				5C8B8792250619DC00C101E8 /* Main.storyboard in Resources */,
 			);
@@ -216,6 +220,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = N4RT4KGQK9;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -276,6 +281,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = N4RT4KGQK9;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

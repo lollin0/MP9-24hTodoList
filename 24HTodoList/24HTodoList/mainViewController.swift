@@ -19,29 +19,29 @@ class MainViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var inputTime: UITextField!
     
     @IBAction func didEndOnExit(sender: AnyObject) {
-
     }
     let datePicker = UIDatePicker()
     @IBAction func checkBtn(_ sender: Any) { // 완료 버튼 누르면 새로운 dataset 생성 및 list에 추가
-        
-        let tvo = TodoVO() //새로운 tVO 생성, 임시용
-        tvo.todoText = textLabel.text!
-        
-        tvo.alarmCount = alarmSeg.selectedSegmentIndex // 세그먼트 값을 alarmCount에 저장
-        tvo.deadLineString = inputTime.text!
-        if daySeg.selectedSegmentIndex == 0{ // 날짜 선택에서 '오늘'을 선택했을 때
-            tvo.deadLine = datePicker.date + (3600*9) // 우리나라는 표준시가 +9이므로 3600초*9 = 32400초를 더해 준다!
-        }else{ //내일을 선택했을 때
-            tvo.deadLine = datePicker.date + 86400 + (3600*9) // 32400초 더해 준 것에다가 다음날(86400)초를 더해 주기
+        if  inputTime.text != "tap here" && textLabel.text != "tap here"{ // textField 비어 있으면 추가 안 됨
+            print(inputTime.text)
+            let tvo = TodoVO() //새로운 tVO 생성, 임시용
+            tvo.todoText = textLabel.text!
+            
+            tvo.alarmCount = alarmSeg.selectedSegmentIndex // 세그먼트 값을 alarmCount에 저장
+            tvo.deadLineString = inputTime.text!
+            if daySeg.selectedSegmentIndex == 0{ // 날짜 선택에서 '오늘'을 선택했을 때
+                tvo.deadLine = datePicker.date + (3600*9) // 우리나라는 표준시가 +9이므로 3600초*9 = 32400초를 더해 준다!
+            }else{ //내일을 선택했을 때
+                tvo.deadLine = datePicker.date + 86400 + (3600*9) // 32400초 더해 준 것에다가 다음날(86400)초를 더해 주기
+            }
+            list.append(tvo)
+            list.sort(by: { $0.deadLine < $1.deadLine }) //배열 정렬
+            tableView.reloadData() //테이블 뷰 갱신
+            textLabel.text = "tap here" // 추가했으니 textLabel 비우기
+            inputTime.text = "tap here"
+            daySeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
+            alarmSeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
         }
-        list.append(tvo)
-        list.sort(by: { $0.deadLine < $1.deadLine }) //배열 정렬
-        tableView.reloadData() //테이블 뷰 갱신
-        textLabel.text = "" // 추가했으니 textLabel 비우기
-        daySeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
-        alarmSeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
-        print(tvo.deadLine)
-        
         
     }
     
@@ -86,9 +86,10 @@ class MainViewController: UIViewController, UITextFieldDelegate{
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
+       
+            inputTime.text = formatter.string(from: datePicker.date)
+            self.view.endEditing(true)
         
-        inputTime.text = formatter.string(from: datePicker.date)
-        self.view.endEditing(true)
     }
     
 }
@@ -160,7 +161,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
                 newArray.append(one)
             }
         }
-        print("todayArray",newArray)
         return newArray
     }
     
@@ -169,14 +169,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
         var calendar = Calendar.current
         let today = Date() + (3600*9)
         let midnight = calendar.startOfDay(for: today) + (3600*9)
-        print(today)
-        print("미드나잇", midnight)
         for one in array{ // 마감 시간이 내일 00시 이후일 때 (내일 끝마칠 일일 때)
             if one.deadLine >= midnight{
                 newArray.append(one)
             }
         }
-        print("tomorrowArray",newArray)
         return newArray
     }
 }
