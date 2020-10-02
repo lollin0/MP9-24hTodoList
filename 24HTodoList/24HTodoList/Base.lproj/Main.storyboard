@@ -55,12 +55,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVb-BR-1K0">
-                                                    <rect key="frame" x="304" y="13" width="90" height="21"/>
+                                                    <rect key="frame" x="266" y="13" width="128" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="90" id="0RB-Jp-uKt"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="6Ru-Kg-H7U"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="NSO-tg-D2p"/>
-                                                        <constraint firstAttribute="height" constant="21" id="QDE-4r-xT5"/>
+                                                        <constraint firstAttribute="height" constant="21" id="X4P-ln-ROS"/>
+                                                        <constraint firstAttribute="width" constant="128" id="l2N-wK-Pjz"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.80538970074507765" green="0.5557057085399133" blue="0.27909670887896787" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -78,15 +76,13 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="mVb-BR-1K0" firstAttribute="trailing" secondItem="to5-jE-GBb" secondAttribute="trailingMargin" id="8BT-d5-0w6"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ivx-hT-ekP" secondAttribute="bottom" constant="2" id="LO8-Ls-4C7"/>
-                                                <constraint firstItem="mVb-BR-1K0" firstAttribute="top" secondItem="to5-jE-GBb" secondAttribute="topMargin" constant="2" id="SJf-wM-hjJ"/>
-                                                <constraint firstAttribute="trailing" secondItem="mVb-BR-1K0" secondAttribute="trailing" constant="20" id="T3x-MT-DBQ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="mVb-BR-1K0" secondAttribute="bottom" constant="2" id="X0y-cU-oAx"/>
+                                                <constraint firstItem="mVb-BR-1K0" firstAttribute="top" secondItem="to5-jE-GBb" secondAttribute="topMargin" constant="2" id="Pnh-gj-j6S"/>
                                                 <constraint firstItem="ivx-hT-ekP" firstAttribute="top" secondItem="to5-jE-GBb" secondAttribute="topMargin" constant="2" id="bmn-UA-tsD"/>
-                                                <constraint firstAttribute="bottom" secondItem="mVb-BR-1K0" secondAttribute="bottom" constant="13" id="fZh-21-PGM"/>
                                                 <constraint firstItem="ivx-hT-ekP" firstAttribute="leading" secondItem="to5-jE-GBb" secondAttribute="leadingMargin" id="gg8-x4-RKw"/>
-                                                <constraint firstItem="mVb-BR-1K0" firstAttribute="trailing" secondItem="to5-jE-GBb" secondAttribute="trailingMargin" id="hFM-mN-ccX"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ivx-hT-ekP" secondAttribute="trailing" constant="136" id="hhu-mK-ZuA"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="mVb-BR-1K0" secondAttribute="bottom" constant="2" id="ill-lt-dJ3"/>
                                                 <constraint firstItem="ivx-hT-ekP" firstAttribute="top" secondItem="to5-jE-GBb" secondAttribute="topMargin" constant="2" id="j3o-Xc-LeH"/>
                                                 <constraint firstItem="ivx-hT-ekP" firstAttribute="leading" secondItem="to5-jE-GBb" secondAttribute="leadingMargin" id="rdW-da-I0x"/>
                                             </constraints>
@@ -238,7 +234,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.25" y="117.39130434782609"/>
+            <point key="canvasLocation" x="130.43478260869566" y="117.1875"/>
         </scene>
         <!--Done Table View Controller-->
         <scene sceneID="hlH-WD-rWA">

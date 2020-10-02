@@ -18,19 +18,40 @@ class DataManager{
     var mainContext: NSManagedObjectContext{
         return persistentContainer.viewContext
     }
+    var doneContext: NSManagedObjectContext{
+        return persistentContainer.viewContext
+    }
     
+    var todayList = [TodoVO]()
+    var tommorowList = [TodoVO]()
+    var doneList = [TodoVO]()
     
-    var todoList = [TodoVO]()
-    
-    func fetchTodo() {
+    func fetchToday() {
         let request: NSFetchRequest<TodoVO> = TodoVO.fetchRequest()
         
         //정렬
-        let sortByDateDesc = NSSortDescriptor(key: "deadLine", ascending: false)
+        let sortByDateDesc = NSSortDescriptor(key: "deadLine", ascending: true)
         request.sortDescriptors = [sortByDateDesc]
+        
 
         do {
-            todoList = try mainContext.fetch(request)
+            todayList = try mainContext.fetch(request)
+
+        } catch  {
+            print(error)
+        }
+        
+    }
+    func fetchDone() {
+        let request: NSFetchRequest<TodoVO> = TodoVO.fetchRequest()
+        
+        //정렬
+        let sortByDateDesc = NSSortDescriptor(key: "deadLine", ascending: true)
+        request.sortDescriptors = [sortByDateDesc]
+        
+        
+        do {
+            doneList = try mainContext.fetch(request)
 
         } catch  {
             print(error)
@@ -44,12 +65,25 @@ class DataManager{
         newTodo.deadLine = deadLines
         newTodo.deadLineString = deadLineStrings
         
+        todayList.append(newTodo)
         
-        todoList.append(newTodo)
         saveContext()
     }
     
-    
+    func addNewDone(_ todos: String?, _ deadLines: Date, _ deadLineStrings: String?){
+        let newTodo = TodoVO(context: mainContext)
+        newTodo.todoText = todos
+        newTodo.deadLine = deadLines
+        newTodo.deadLineString = deadLineStrings
+        
+        doneList.append(newTodo)
+        
+        saveContext()
+    }
+    func invisilbleTodo(_ index: Int){
+        todayList.remove(at: index)
+        saveContext()
+    }
     func deleteTodo(_ todo: TodoVO?){
         if let todo = todo{
             mainContext.delete(todo)

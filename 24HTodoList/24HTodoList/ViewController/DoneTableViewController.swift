@@ -7,12 +7,11 @@
 //
 
 import UIKit
-var doneList:[TodoVO] = []
 class DoneTableViewController: UITableViewController {
     
     @IBAction func clearBtn(_ sender: Any) {
         
-        doneList.removeAll()
+        //doneList.removeAll()
         tableView.reloadData()
     }
     override func viewDidLoad() {
@@ -20,13 +19,13 @@ class DoneTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return doneList.count
+        return DataManager.shared.doneList.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "doneCell")! // return을 위한 셀 변수 셍성
-        let row = doneList[indexPath.row] // 행에 맞는 데이터 가져오기
+        let row = DataManager.shared.doneList[indexPath.row] // 행에 맞는 데이터 가져오기
         
         // 레이블을 변수로 받음
         let text = cell.viewWithTag(101) as? UILabel
@@ -44,13 +43,13 @@ class DoneTableViewController: UITableViewController {
         let alert = UIAlertController(title: "삭제 혹은 복구하시겠습니까?", message: "지워진 내용은 복구하실 수 없습니다.", preferredStyle: UIAlertController.Style.alert)
         
         let recover = UIAlertAction(title: "복구", style: .default) { (action) in
-            doneList.remove(at: indexPath.row)
+            //doneList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.reloadData()
         }
         let okAction = UIAlertAction(title: "삭제", style: .destructive) { (action) in
-            DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
-            doneList.remove(at: indexPath.row)
+            //DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
+           // doneList.remove(at: indexPath.row)
             tableView.reloadData()
         }
         

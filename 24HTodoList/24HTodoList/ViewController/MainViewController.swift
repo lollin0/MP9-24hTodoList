@@ -24,13 +24,13 @@ class MainViewController: UIViewController, UITextFieldDelegate{
         if  inputTime.text != "tap here" && textLabel.text != "tap here"{ // textField 비어 있으면 추가 안 됨
             var deadLine = Date()
             if daySeg.selectedSegmentIndex == 0{ // 날짜 선택에서 '오늘'을 선택했을 때
-                deadLine = datePicker.date + (3600*9) // 우리나라는 표준시가 +9이므로 3600초*9 = 32400초를 더해 준다!
+                deadLine = datePicker.date
             }else{ //내일을 선택했을 때
-                deadLine = datePicker.date + 86400 + (3600*9) // 32400초 더해 준 것에다가 다음날(86400)초를 더해 주기
+                deadLine = datePicker.date + 86400 // 다음날(86400)초를 더해 주기
             }
-            //DataManager.shared.todoList.append(tvo)
             DataManager.shared.addNewTodo(textLabel.text, deadLine, inputTime.text)
-//            DataManager.shared.todoList.sort(by: { $0.deadLine! < $1.deadLine! }) //배열 정렬
+            DataManager.shared.fetchToday() // core data 정렬!
+//            DataManager.shared.fetchTommorow()
             tableView.reloadData() //테이블 뷰 갱신
             textLabel.text = "" // 추가했으니 textLabel 비우기
             inputTime.text = ""
@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UITextFieldDelegate{
         
         super.viewWillAppear(animated)
         
-        DataManager.shared.fetchTodo()
+        DataManager.shared.fetchToday()
         tableView.reloadData()
     }
     func createDatePicker(){
@@ -91,37 +91,40 @@ class MainViewController: UIViewController, UITextFieldDelegate{
 }
 extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count // 섹션 개수 2개
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sections[section]
+//    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return sections.count // 섹션 개수 2개
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return newTodayArray(array: DataManager.shared.todoList).count //'오늘'리스트의 개수를 셀 개수로 반환
+            return DataManager.shared.todayList.count //'오늘'리스트의 개수를 셀 개수로 반환
         }else{
-            return newTomorrowArray(array: DataManager.shared.todoList).count //'내일'리스트의 개수를 셀 개수로 반환
+            return DataManager.shared.tommorowList.count //'내일'리스트의 개수를 셀 개수로 반환
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell")! // return을 위한 셀 변수 셍성
         let row: TodoVO
-        if indexPath.section == 0{
-            row = newTodayArray(array: DataManager.shared.todoList)[indexPath.row] // '오늘' 배열 데이터 가져오기
-        } else{
-            row = newTomorrowArray(array: DataManager.shared.todoList)[indexPath.row]
-        }
         
-        
+//        if indexPath.section == 0{
+            row = DataManager.shared.todayList[indexPath.row] // '오늘' 배열 데이터 가져오기
+//        } else{
+//            row =  DataManager.shared.tommorowList[indexPath.row]  // 내일 배열 데이터 가져오기
+//        }
         // 레이블을 변수로 받음
         let text = cell.viewWithTag(101) as? UILabel
         let time = cell.viewWithTag(102) as? UILabel
-        
+    
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd HH:mm"
+
         //각 레이블에 가져온 데이터 넣기
         text?.text = row.todoText
-        time?.text = row.deadLineString
+        time?.text = dateFormatter.string(from: row.deadLine!)
         
         
         return cell
@@ -129,9 +132,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        doneList.append(DataManager.shared.todoList[indexPath.row])
+        DataManager.shared.addNewDone(DataManager.shared.todayList[indexPath.row].todoText, DataManager.shared.todayList[indexPath.row].deadLine!, DataManager.shared.todayList[indexPath.row].deadLineString)
+        DataManager.shared.invisilbleTodo(indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .bottom)
-        DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
         tableView.reloadData()
         
     }
@@ -142,7 +145,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
+           // DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }
     }
