@@ -11,7 +11,7 @@ class DoneTableViewController: UITableViewController {
     
     @IBAction func clearBtn(_ sender: Any) {
         
-        //doneList.removeAll()
+        DataManager.shared.clearDoneList()
         tableView.reloadData()
     }
     override func viewDidLoad() {
@@ -43,13 +43,16 @@ class DoneTableViewController: UITableViewController {
         let alert = UIAlertController(title: "삭제 혹은 복구하시겠습니까?", message: "지워진 내용은 복구하실 수 없습니다.", preferredStyle: UIAlertController.Style.alert)
         
         let recover = UIAlertAction(title: "복구", style: .default) { (action) in
-            //doneList.remove(at: indexPath.row)
+            DataManager.shared.doneList[indexPath.row].isDone = false
+            DataManager.shared.saveContext()
+            DataManager.shared.fetchTodo()
             tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.reloadData()
         }
         let okAction = UIAlertAction(title: "삭제", style: .destructive) { (action) in
-            //DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
-           // doneList.remove(at: indexPath.row)
+            DataManager.shared.deleteTodo(DataManager.shared.doneList[indexPath.row])
+            DataManager.shared.fetchTodo()
+            tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.reloadData()
         }
         

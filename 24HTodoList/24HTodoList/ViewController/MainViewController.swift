@@ -29,8 +29,8 @@ class MainViewController: UIViewController, UITextFieldDelegate{
                 deadLine = datePicker.date + 86400 // 다음날(86400)초를 더해 주기
             }
             DataManager.shared.addNewTodo(textLabel.text, deadLine, inputTime.text)
-            DataManager.shared.fetchToday() // core data 정렬!
-//            DataManager.shared.fetchTommorow()
+            DataManager.shared.fetchTodo() // core data 정렬!
+            DataManager.shared.setAllList()
             tableView.reloadData() //테이블 뷰 갱신
             textLabel.text = "" // 추가했으니 textLabel 비우기
             inputTime.text = ""
@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UITextFieldDelegate{
         
         super.viewWillAppear(animated)
         
-        DataManager.shared.fetchToday()
+        DataManager.shared.fetchTodo()
         tableView.reloadData()
     }
     func createDatePicker(){
@@ -91,12 +91,12 @@ class MainViewController: UIViewController, UITextFieldDelegate{
 }
 extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sections[section]
-//    }
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return sections.count // 섹션 개수 2개
-//    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count // 섹션 개수 2개
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return DataManager.shared.todayList.count //'오늘'리스트의 개수를 셀 개수로 반환
@@ -109,11 +109,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell")! // return을 위한 셀 변수 셍성
         let row: TodoVO
         
-//        if indexPath.section == 0{
-            row = DataManager.shared.todayList[indexPath.row] // '오늘' 배열 데이터 가져오기
-//        } else{
-//            row =  DataManager.shared.tommorowList[indexPath.row]  // 내일 배열 데이터 가져오기
-//        }
+        if indexPath.section == 0{
+        row = DataManager.shared.todayList[indexPath.row] // '오늘' 배열 데이터 가져오기
+        } else{
+            row =  DataManager.shared.tommorowList[indexPath.row]  // 내일 배열 데이터 가져오기
+        }
         // 레이블을 변수로 받음
         let text = cell.viewWithTag(101) as? UILabel
         let time = cell.viewWithTag(102) as? UILabel
@@ -132,11 +132,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        DataManager.shared.addNewDone(DataManager.shared.todayList[indexPath.row].todoText, DataManager.shared.todayList[indexPath.row].deadLine!, DataManager.shared.todayList[indexPath.row].deadLineString)
-        DataManager.shared.invisilbleTodo(indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .bottom)
+        if indexPath.section == 0{
+            DataManager.shared.todayList[indexPath.row].isDone = true
+        } else{
+            DataManager.shared.tommorowList[indexPath.row].isDone = true
+        }
+        DataManager.shared.saveContext()
+        DataManager.shared.fetchTodo()
+
+       tableView.deleteRows(at: [indexPath], with: .bottom)
         tableView.reloadData()
-        
+
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -145,7 +151,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-           // DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
+            DataManager.shared.deleteTodo(DataManager.shared.todoList[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }
     }
