@@ -9,6 +9,10 @@
 import UIKit
 class DoneTableViewController: UITableViewController {
     
+    @IBAction func backBtn(_ sender: Any) {
+        //MainViewController.tableview.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
     @IBAction func clearBtn(_ sender: Any) {
         
         DataManager.shared.clearDoneList()
@@ -65,7 +69,7 @@ class DoneTableViewController: UITableViewController {
         
     }
     
-   
+    
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

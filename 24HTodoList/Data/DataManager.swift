@@ -76,6 +76,7 @@ class DataManager{
                 print(tommorowList)
             }
         }
+        doneList.sorted(by: {$0.deadLine! < $1.deadLine!})
         //saveContext()
     }
     
