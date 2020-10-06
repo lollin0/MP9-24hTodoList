@@ -50,25 +50,30 @@ class DataManager{
         tommorowList.removeAll()
         doneList.removeAll()
         let calendar = Calendar.current // 캘린더 선언(오늘)
-        let today = Date() + (3600*9) // 오늘 날짜 변수 선언 (오늘+9시간 = 한국시간)
-        let midnight = calendar.startOfDay(for: today) + (3600*9) // 오늘 날짜의 시작 (00시) + 9시간
-        
+        let today = Date()  // 오늘 날짜 변수 선언 (오늘+9시간 = 한국시간)
+        let midnight = calendar.startOfDay(for: today) + (3600*9) + 86400 // 오늘 날짜의 시작 (00시) + 9시간
+        print("####################E@###########@##",today)
+        print("####################E@###########@##",midnight)
         for one in allList{
             if one.isDone == true{
                 doneList.append(one)
             }
             else{
                 todoList.append(one)
-                print(todoList)
             }
         }
         
         for one in todoList{
-            if one.deadLine! < midnight { // 마감 시간이 내일 00시 이전일 때(오늘 끝마칠 일일 때)
+            if one.deadLine! < midnight - 86400 {
+                doneList.append(one)
+            }
+            else if one.deadLine! < midnight { // 마감 시간이 내일 00시 이전일 때(오늘 끝마칠 일일 때)
                 todayList.append(one)
+                print(todayList)
             }
             else{
                 tommorowList.append(one)
+                print(tommorowList)
             }
         }
         //saveContext()
@@ -86,13 +91,7 @@ class DataManager{
         saveContext()
     }
     
-//    func invisilbleTodo(_ index: Int, _ target: TodoVO){
-//        all
-//        target.isDone = true
-//        saveContext()
-//        
-//    }
-//    
+
     func deleteTodo(_ todo: TodoVO?){
         if let todo = todo{
             mainContext.delete(todo)

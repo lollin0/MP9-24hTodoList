@@ -82,9 +82,9 @@ class MainViewController: UIViewController, UITextFieldDelegate{
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
-       
-            inputTime.text = formatter.string(from: datePicker.date)
-            self.view.endEditing(true)
+        
+        inputTime.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
         
     }
     
@@ -110,21 +110,21 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
         let row: TodoVO
         
         if indexPath.section == 0{
-        row = DataManager.shared.todayList[indexPath.row] // '오늘' 배열 데이터 가져오기
+            row = DataManager.shared.todayList[indexPath.row] // '오늘' 배열 데이터 가져오기
         } else{
             row =  DataManager.shared.tommorowList[indexPath.row]  // 내일 배열 데이터 가져오기
         }
         // 레이블을 변수로 받음
         let text = cell.viewWithTag(101) as? UILabel
         let time = cell.viewWithTag(102) as? UILabel
-    
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd HH:mm"
-
+        
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "MM/dd HH:mm"
+        
         //각 레이블에 가져온 데이터 넣기
         text?.text = row.todoText
-        time?.text = dateFormatter.string(from: row.deadLine!)
+        time?.text = row.deadLineString
         
         
         return cell
@@ -139,10 +139,10 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
         }
         DataManager.shared.saveContext()
         DataManager.shared.fetchTodo()
-
-       tableView.deleteRows(at: [indexPath], with: .bottom)
+        
+        tableView.deleteRows(at: [indexPath], with: .bottom)
         tableView.reloadData()
-
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -156,30 +156,4 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
         }
     }
     
-    func newTodayArray(array: [TodoVO]) -> [TodoVO]{ // 오늘까지인 투두리스트를 새로운 배열로 만들어 반환하는 함수
-        var newArray:[TodoVO] = [] // 반환할 새로운 배열
-        let calendar = Calendar.current // 캘린더 선언(오늘)
-        let today = Date() + (3600*9) // 오늘 날짜 변수 선언 (오늘+9시간 = 한국시간)
-        let midnight = calendar.startOfDay(for: today) + (3600*9) // 오늘 날짜의 시작 (00시) + 9시간
-        
-        for one in array{
-            if one.deadLine! < midnight { // 마감 시간이 내일 00시 이전일 때(오늘 끝마칠 일일 때)
-                newArray.append(one)
-            }
-        }
-        return newArray
-    }
-    
-    func newTomorrowArray(array: [TodoVO]) -> [TodoVO]{ // 내일까지인 투두리스트를 새로운 배열로 만들어 반환하는 함수
-        var newArray:[TodoVO] = []
-        var calendar = Calendar.current
-        let today = Date() + (3600*9)
-        let midnight = calendar.startOfDay(for: today) + (3600*9)
-        for one in array{ // 마감 시간이 내일 00시 이후일 때 (내일 끝마칠 일일 때)
-            if one.deadLine! >= midnight{
-                newArray.append(one)
-            }
-        }
-        return newArray
-    }
 }

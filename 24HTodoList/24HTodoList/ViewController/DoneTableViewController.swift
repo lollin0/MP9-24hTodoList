@@ -31,9 +31,12 @@ class DoneTableViewController: UITableViewController {
         let text = cell.viewWithTag(101) as? UILabel
         let time = cell.viewWithTag(102) as? UILabel
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd HH:mm"
+        
         //각 레이블에 가져온 데이터 넣기
         text?.text = row.todoText
-        time?.text = row.deadLineString
+        time?.text = dateFormatter.string(from: row.deadLine!)
         
         return cell
     }
