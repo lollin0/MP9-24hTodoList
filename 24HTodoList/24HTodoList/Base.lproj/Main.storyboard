@@ -2,16 +2,11 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Maplestory OTF Light.otf">
-            <string>MaplestoryOTFLight</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -22,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cVT-2X-Hci" userLabel="TableView">
-                                <rect key="frame" x="0.0" y="184" width="414" height="678"/>
+                                <rect key="frame" x="0.0" y="142" width="414" height="720"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="LiV-Bf-4mG">
                                     <rect key="frame" x="0.0" y="103" width="414" height="33"/>
@@ -75,7 +70,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="G5w-0F-YJH"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="fs1-us-Ll8"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.6368806670984456" green="0.42102874874339452" blue="0.23779838173389947" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -100,43 +95,14 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="rsl-VS-au6"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="내용을 입력하세요 !" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WNj-E1-xpe">
-                                <rect key="frame" x="20" y="140" width="374" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="A4S-AB-do5"/>
-                                </constraints>
-                                <color key="textColor" red="0.94289779659999995" green="0.65444701910000003" blue="0.33717289569999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="didEndOnExitWithSender:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="SUQ-bC-uus"/>
-                                    <action selector="touchTextField:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FXA-I1-AJE"/>
-                                </connections>
-                            </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cV2-lc-IVt">
-                                <rect key="frame" x="20" y="102" width="374" height="32"/>
-                                <color key="backgroundColor" red="1" green="0.91273853837003371" blue="0.77180456996800639" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="CTv-rj-fQE"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="UjL-Jo-Hbx"/>
-                                    <constraint firstAttribute="width" constant="374" id="pDH-cO-Pnt"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="알림 없음"/>
-                                    <segment title="1시간 전"/>
-                                    <segment title="2시간 전"/>
-                                    <segment title="3시간 전"/>
-                                </segments>
-                                <color key="tintColor" red="1" green="0.78965498999999995" blue="0.52765349419999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </segmentedControl>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="시간을 입력하세요 !" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vvq-PL-a69">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="마감 시간을 입력하세요 !" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vvq-PL-a69">
                                 <rect key="frame" x="130" y="59" width="219" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="219" id="0kA-es-W6M"/>
                                     <constraint firstAttribute="height" constant="34" id="GmL-oY-NhT"/>
                                 </constraints>
                                 <color key="textColor" red="0.94289779659999995" green="0.65444701910000003" blue="0.33717289569999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" name="MaplestoryOTFLight" family="Maplestory OTF" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ktR-w8-rAb">
@@ -148,46 +114,53 @@
                                 </segments>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aJ-gg-a2n">
-                                <rect key="frame" x="354" y="54" width="40" height="41"/>
+                                <rect key="frame" x="357" y="52" width="40" height="41"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="268-fy-ycO"/>
-                                    <constraint firstAttribute="height" constant="41" id="igg-FW-2Vd"/>
+                                    <constraint firstAttribute="width" constant="40" id="Sex-q8-FGz"/>
+                                    <constraint firstAttribute="height" constant="41" id="rKj-ca-iCp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                <state key="normal" backgroundImage="제목_없는_아트워크">
-                                    <color key="titleColor" systemColor="darkTextColor"/>
-                                    <color key="titleShadowColor" systemColor="opaqueSeparatorColor"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.80538970070000004" green="0.55570570850000001" blue="0.27909670889999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleShadowColor" red="0.42790641190000001" green="0.28288015399999999" blue="0.1597716143" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="checkBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lHD-uv-PQL"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="내용을 입력하세요 !" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WNj-E1-xpe">
+                                <rect key="frame" x="20" y="98" width="374" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="dcr-mU-UsF"/>
+                                </constraints>
+                                <color key="textColor" red="0.94289779659999995" green="0.65444701910000003" blue="0.33717289569999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="didEndOnExitWithSender:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="SUQ-bC-uus"/>
+                                    <action selector="touchTextField:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FXA-I1-AJE"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="cVT-2X-Hci" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="44f-o6-DdX"/>
-                            <constraint firstItem="cV2-lc-IVt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="BWP-UR-3Ag"/>
+                            <constraint firstItem="cVT-2X-Hci" firstAttribute="top" secondItem="WNj-E1-xpe" secondAttribute="bottom" constant="8" id="3Hd-9p-vIc"/>
+                            <constraint firstItem="cVT-2X-Hci" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9Io-uc-6Ta"/>
                             <constraint firstItem="ktR-w8-rAb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BdV-0l-MXS"/>
                             <constraint firstItem="ktR-w8-rAb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="EAr-WO-DxD"/>
-                            <constraint firstItem="WNj-E1-xpe" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="FzL-8j-W9m"/>
-                            <constraint firstItem="cVT-2X-Hci" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Irm-Q8-6Tp"/>
                             <constraint firstItem="vvq-PL-a69" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="JUl-JV-7QX"/>
-                            <constraint firstItem="cV2-lc-IVt" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="JlB-Q9-zBI"/>
-                            <constraint firstItem="cVT-2X-Hci" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="MOQ-Cu-hRP"/>
-                            <constraint firstItem="cV2-lc-IVt" firstAttribute="top" secondItem="vvq-PL-a69" secondAttribute="bottom" constant="9" id="TXi-E7-S2V"/>
-                            <constraint firstItem="WNj-E1-xpe" firstAttribute="top" secondItem="cV2-lc-IVt" secondAttribute="bottom" constant="7" id="WgU-Ck-4Co"/>
-                            <constraint firstItem="cVT-2X-Hci" firstAttribute="top" secondItem="WNj-E1-xpe" secondAttribute="bottom" constant="8" id="fGj-o9-T3V"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9aJ-gg-a2n" secondAttribute="trailing" constant="20" id="gaF-im-vkK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WNj-E1-xpe" secondAttribute="trailing" constant="20" id="NHc-1K-uoy"/>
+                            <constraint firstItem="cVT-2X-Hci" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="NjY-KW-Z6W"/>
+                            <constraint firstItem="WNj-E1-xpe" firstAttribute="top" secondItem="vvq-PL-a69" secondAttribute="bottom" constant="5" id="VxQ-D6-owG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9aJ-gg-a2n" secondAttribute="trailing" constant="17" id="ajm-U5-ha4"/>
+                            <constraint firstItem="cVT-2X-Hci" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bBs-Vh-HX9"/>
+                            <constraint firstItem="WNj-E1-xpe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bIr-1o-Btv"/>
                             <constraint firstItem="vvq-PL-a69" firstAttribute="leading" secondItem="ktR-w8-rAb" secondAttribute="trailing" constant="27" id="gwO-IW-rGR"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cV2-lc-IVt" secondAttribute="trailing" constant="20" id="lPB-WW-yp4"/>
-                            <constraint firstItem="cV2-lc-IVt" firstAttribute="top" secondItem="ktR-w8-rAb" secondAttribute="bottom" constant="12" id="nAE-84-mEX"/>
-                            <constraint firstItem="WNj-E1-xpe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p05-TI-bhv"/>
-                            <constraint firstItem="9aJ-gg-a2n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="xlo-6M-lTS"/>
+                            <constraint firstItem="9aJ-gg-a2n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="kFW-Ma-q0T"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="alarmSeg" destination="cV2-lc-IVt" id="8zf-Dc-l8P"/>
                         <outlet property="daySeg" destination="ktR-w8-rAb" id="qgM-Q2-HRh"/>
                         <outlet property="inputTime" destination="vvq-PL-a69" id="FMP-RD-mXG"/>
                         <outlet property="tableView" destination="cVT-2X-Hci" id="yTh-cc-8W4"/>
@@ -196,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129.91071428571428" y="115.94202898550725"/>
+            <point key="canvasLocation" x="128.98550724637681" y="115.84821428571428"/>
         </scene>
         <!--Done Table View Controller-->
         <scene sceneID="hlH-WD-rWA">
@@ -293,13 +266,6 @@
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="106"/>
-        <image name="제목_없는_아트워크" width="204" height="204"/>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -10,7 +10,8 @@ import UIKit
 import UserNotifications
 var sections = ["오늘", "내일"]
 class MainViewController: UIViewController, UITextFieldDelegate{
-    
+    var token : NSObjectProtocol? = nil
+
     @IBOutlet weak var daySeg: UISegmentedControl!
     @IBOutlet weak var alarmSeg: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
@@ -29,13 +30,13 @@ class MainViewController: UIViewController, UITextFieldDelegate{
                 deadLine = datePicker.date + 86400 // 다음날(86400)초를 더해 주기
             }
             DataManager.shared.addNewTodo(textLabel.text, deadLine, inputTime.text)
+            
             DataManager.shared.fetchTodo() // core data 정렬!
             DataManager.shared.setAllList()
             tableView.reloadData() //테이블 뷰 갱신
             textLabel.text = "" // 추가했으니 textLabel 비우기
             inputTime.text = ""
             daySeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
-            alarmSeg.selectedSegmentIndex = 0 //추가했으니 기본 상태로 복귀
         }
         
     }
@@ -45,7 +46,11 @@ class MainViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
-      
+        token = NotificationCenter.default.addObserver(forName:
+                    DoneTableViewController.restoreTodo, object: nil, queue:
+                    OperationQueue.main){ [weak self] (noti) in
+                    self?.tableView.reloadData()
+               }
     }
     override func viewWillAppear(_ animated: Bool) {
         

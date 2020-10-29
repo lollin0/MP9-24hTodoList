@@ -50,10 +50,11 @@ class DataManager{
         tommorowList.removeAll()
         doneList.removeAll()
         let calendar = Calendar.current // 캘린더 선언(오늘)
-        let today = Date()  // 오늘 날짜 변수 선언
-        let tommorow = today + 86400
-        let midnight = calendar.startOfDay(for: tommorow) + 3600*9  // 내일 날짜의 시작 (00시) + 9시간
+        let today = Date() // 오늘 날짜 변수 선언 오늘 오후 4시
+        let tommorow = today + 86400 // 내일 오후 4시
+        let midnight = calendar.startOfDay(for: today)  + 86400 + 3600*9// 내일 날짜의 시작 (00시) + 9시간
         print("현재 시간: ",today)
+        print("내일 시간: ",tommorow)
         print("오늘 24시(내일 00시): ",midnight)
         for one in allList{
             if one.isDone == true{
@@ -76,8 +77,8 @@ class DataManager{
                 tommorowList.append(one)
                 print(tommorowList)
             }
+            doneList.sorted(by: {$0.deadLine! < $1.deadLine!})
         }
-        doneList.sorted(by: {$0.deadLine! < $1.deadLine!})
         //saveContext()
     }
     

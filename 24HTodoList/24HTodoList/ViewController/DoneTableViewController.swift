@@ -8,6 +8,7 @@
 
 import UIKit
 class DoneTableViewController: UITableViewController {
+    static let restoreTodo = Notification.Name(rawValue: "restoreTodo")
     
     @IBAction func backBtn(_ sender: Any) {
         //MainViewController.tableview.reloadData()
@@ -46,25 +47,42 @@ class DoneTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let calendar = Calendar.current // 캘린더 선언(오늘)
+        let today = Date() // 오늘 날짜 변수 선언 오늘 오후 4시
+        let tommorow = today + 86400 // 내일 오후 4시
+        let midnight = calendar.startOfDay(for: today)  + 3600*9// 내일 날짜의 시작 (00시) + 9시간
         
         let alert = UIAlertController(title: "삭제 혹은 복구하시겠습니까?", message: "지워진 내용은 복구하실 수 없습니다.", preferredStyle: UIAlertController.Style.alert)
-        
         let recover = UIAlertAction(title: "복구", style: .default) { (action) in
-            DataManager.shared.doneList[indexPath.row].isDone = false
-            DataManager.shared.saveContext()
-            DataManager.shared.fetchTodo()
-            tableView.deleteRows(at: [indexPath], with: .bottom)
-            tableView.reloadData()
-        }
+            if DataManager.shared.doneList[indexPath.row].deadLine! < midnight{
+                let alertW = UIAlertController(title: "실패!", message: "이미 지난 일정은 복구하실 수 없습니다. 삭제해 주세요.", preferredStyle: UIAlertController.Style.alert)
+                let cancel = UIAlertAction(title: "뒤로 가기", style: UIAlertAction.Style.cancel)
+                alertW.addAction(cancel)
+                self.present(alertW, animated: false)
+            } else{
+                DataManager.shared.doneList[indexPath.row].isDone = false
+                DataManager.shared.saveContext()
+                DataManager.shared.fetchTodo()
+                tableView.deleteRows(at: [indexPath], with: .bottom)
+                NotificationCenter.default.post(name: DoneTableViewController.restoreTodo, object: nil)
+                tableView.reloadData()
+            }
+            
+            
+            
+            
+            }
         let okAction = UIAlertAction(title: "삭제", style: .destructive) { (action) in
             DataManager.shared.deleteTodo(DataManager.shared.doneList[indexPath.row])
             DataManager.shared.fetchTodo()
             tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.reloadData()
+            
+            
         }
-        
         alert.addAction(recover)
         alert.addAction(okAction)
+        
         self.present(alert, animated: true)
         
     }
@@ -116,3 +134,4 @@ class DoneTableViewController: UITableViewController {
      */
     
 }
+
